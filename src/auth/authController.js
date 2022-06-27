@@ -15,25 +15,20 @@ export async function signUp(req, res, next) {
 		userId: req.body.userId,
 		userPw: req.body.userPw,
 	};
-
-	let error = userInfoCheck(reqUser);
-	if (!error) {
-		try {
-			const user = await SignUp(reqUser);
-			res.status(200).json({ success: true, message: "SignUp Succeed" });
-		} catch (err) {
-			logger.error(err);
-			res.status(500).json({ success: false, message: err.message });
-		}
-	} else {
-		res.status(422).json({ success: false, message: "Invalid Data Format" });
+	try {
+		const user = await SignUp(reqUser);
+		res.status(200).json({ success: true, message: "SignUp Succeed" });
+	} catch (err) {
+		logger.error(err);
+		res.status(500).json({ success: false, message: err.message });
 	}
 }
 
 export async function login(req, res, next) {
+	if (!req.body.userId || !req.body.userPw) return res.json({ success: false, message: "Invalid data format" });
 	passport.authenticate("local", { session: false }, (err, user, info) => {
 		if (err || !user) {
-			return res.status(400).json({ success: false, message: "No such User" });
+			return res.status(400).json({ success: false, message: info });
 		}
 		req.login(user, { session: false }, (error) => {
 			if (error) {
