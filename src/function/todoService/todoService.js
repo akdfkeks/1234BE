@@ -34,8 +34,9 @@ export async function createTodo(userId, title, targetDate) {
 	if (!title) title = "";
 	if (!targetDate) targetDate = getYearToMin();
 
-	const yearMonth = parseYearMonthFromInput(targetDate);
+	const yearMonth = parseYearMonthFromInput(targetDate); // ex) 20220628
 	const targetISODate = parseISODateFromInput(targetDate, "YYYYMMDD-HHmm");
+	// ex) 2022-08-01T17:00:00.000Z
 
 	try {
 		const newTodoList = await prisma.scheduleCart.upsert({
