@@ -1,7 +1,7 @@
 "use strict";
 
-import { getTodo, createTodo } from "../function/todoService/todoService";
-import { getYearMonth } from "../function/etc/getYearMonth";
+import { getTodo, createTodo } from "../function/todoService/todoService.js";
+import { getYearMonth } from "../function/etc/getYearMonth.js";
 
 export async function getToodoo(req, res, next) {
 	// user object from jwtAuth Middleware
@@ -30,6 +30,6 @@ export async function createToodoo(req, res, next) {
 	}
 }
 
-export function modifyTodo(req, res, next) {
+export function modifyToodoo(req, res, next) {
 	//
 }
