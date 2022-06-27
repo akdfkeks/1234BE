@@ -6,6 +6,7 @@ import { logger } from "../function/logger/logger.js";
 export async function getUserBoard(req, res, next) {
 	const { userId } = req.body.user;
 	try {
+		// TODO : Modularization
 		const userInfo = await prisma.user.findUnique({
 			where: { userId: userId },
 			include: {
@@ -23,8 +24,34 @@ export async function getUserBoard(req, res, next) {
 		logger.error(err);
 	}
 }
-export function createUserBoard(req, res, next) {
-	const { userId } = req.body;
+export async function createUserBoard(req, res, next) {
+	const { userId } = req.body.user;
+	const { boardTitle } = req.body;
+	try {
+		// TODO : Modularization
+		const userInfo = await prisma.user.update({
+			where: { userId },
+			data: {
+				boardList: {
+					create: {
+						title: boardTitle,
+					},
+				},
+			},
+			include: {
+				boardList: {
+					select: {
+						uuid: true,
+						title: true,
+						ownerId: true,
+					},
+				},
+			},
+		});
+		res.status(200).json({ success: true, message: "Succeed", data: userInfo.boardList });
+	} catch (err) {
+		logger.error(err);
+	}
 }
 export function getUserInfo(req, res, next) {
 	const { userId } = req.body;
