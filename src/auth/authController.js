@@ -5,6 +5,7 @@ import jwt from "jsonwebtoken";
 import passport from "passport";
 import dotenv from "dotenv";
 import { SignUp } from "../function/authService/authService.js";
+import { logger } from "../function/logger/logger.js";
 
 dotenv.config();
 
@@ -21,7 +22,7 @@ export async function signUp(req, res, next) {
 			const user = await SignUp(reqUser);
 			res.status(200).json({ success: true, message: "SignUp Succeed" });
 		} catch (err) {
-			// TODO : Logger
+			logger.error(err);
 			res.status(500).json({ success: false, message: err.message });
 		}
 	} else {

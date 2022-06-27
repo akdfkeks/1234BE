@@ -1,5 +1,5 @@
 import prisma from "../orm/prisma";
-
+import logger from "../function/logger/logger.js";
 export async function getTodo(userId, targetYearMonth) {
 	// targetYearMonth example : 202206
 	try {
@@ -14,7 +14,7 @@ export async function getTodo(userId, targetYearMonth) {
 
 		return recentTodoLists;
 	} catch (error) {
-		console.log(error);
+		logger.error(err);
 		throw new Error("Fail to get data");
 	}
 }

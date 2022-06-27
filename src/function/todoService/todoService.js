@@ -1,5 +1,6 @@
 import prisma from "../../orm/prisma.js";
 import { parseYearMonthFromInput, getYearToMin, parseISODateFromInput } from "../etc/getYearMonth.js";
+import { logger } from "../logger/logger.js";
 
 export async function getTodo(userId, targetYearMonth) {
 	if (!userId || !targetYearMonth) throw new Error("todoService : Invalid arguments");
@@ -24,7 +25,7 @@ export async function getTodo(userId, targetYearMonth) {
 		});
 		return recentTodoLists;
 	} catch (error) {
-		console.log(error);
+		logger.error(err);
 		throw new Error("todoService : Fail to get TODO cart");
 	}
 }
@@ -56,7 +57,7 @@ export async function createTodo(userId, title, targetDate) {
 		});
 		return newTodoList;
 	} catch (error) {
-		console.log(error);
+		logger.error(err);
 		throw new Error("todoService : Fail to create a new schedule");
 	}
 }

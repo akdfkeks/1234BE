@@ -12,7 +12,6 @@ export function jwtAuth(req, res, next) {
 		//console.log(jwtPayload);
 		// set JWT's payload(data) to req.body
 		// for Next Middleware can access to the object
-		// console.log(jwtPayload);
 		req.body.user = jwtPayload;
 		next();
 	})(req, res, next);
