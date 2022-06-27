@@ -1,10 +1,12 @@
 "use strict";
 
 import prisma from "../../orm/prisma.js";
+
 import { createHashedPw } from "../password.js";
 import { getYearMonth } from "../etc/getYearMonth.js";
 
 export async function SignUp(reqUser) {
+	// Check if user already exists
 	const userExists = await prisma.user.count({ where: { userId: reqUser.userId } });
 	if (userExists) throw new Error("User already exists");
 
@@ -18,7 +20,6 @@ export async function SignUp(reqUser) {
 		},
 	});
 
-	// When user creation succeed
 	if (userData) {
 		const currentYearMonth = parseInt(getYearMonth());
 		const scheduleCart = await prisma.scheduleCart.create({
@@ -31,7 +32,7 @@ export async function SignUp(reqUser) {
 			throw new Error("Fail to create ScheduleCart");
 		}
 		return userData;
-	} else throw new Error("Fail to create UserData");
+	} else throw new Error("Fail to create User");
 }
 
 export async function Login(user) {
