@@ -12,7 +12,14 @@ export async function getTodo(userId, targetYearMonth) {
 				ownerId_yearMonth: { ownerId: userId, yearMonth: targetYearMonth },
 			},
 			include: {
-				schedules: true,
+				schedules: {
+					select: {
+						uuid: true,
+						title: true,
+						targetDate: true,
+						onChecked: true,
+					},
+				},
 			},
 			create: {
 				ownerId: userId,
@@ -45,7 +52,14 @@ export async function createTodo(userId, title, targetDate) {
 				ownerId_yearMonth: { ownerId: userId, yearMonth: yearMonth },
 			},
 			include: {
-				schedules: true,
+				schedules: {
+					select: {
+						uuid: true,
+						title: true,
+						targetDate: true,
+						onChecked: true,
+					},
+				},
 			},
 			create: {
 				ownerId: userId,
