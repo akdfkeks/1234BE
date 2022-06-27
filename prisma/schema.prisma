@@ -18,6 +18,7 @@ model User {
     userPw       String?
     createdAt    DateTime       @default(now())
     ScheduleCart ScheduleCart[]
+    boardList    Board[]
 }
 
 model ScheduleCart {
@@ -47,14 +48,17 @@ model Schedule {
 
 model Board {
     uuid      String   @id @default(uuid())
-    title     String
+    title     String   @default("")
     createdAt DateTime @default(now())
     posts     Post[]
+    User      User?    @relation(fields: [ownerId], references: [userId])
+    ownerId   String
 }
 
 model Post {
     uuid      String   @id @default(uuid())
-    title     String
+    title     String   @default("")
+    body      String?
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
     Board     Board?   @relation(fields: [boardId], references: [uuid])
