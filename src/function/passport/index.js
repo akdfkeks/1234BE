@@ -13,6 +13,7 @@ const LocalConfig = {
 	passwordField: "userPw",
 };
 async function LocalVerify(userId, userPw, fin) {
+	if (!userId || !userPw) return fin("Invalid data format");
 	try {
 		const user = await prisma.user.findUnique({
 			where: { userId: userId },
