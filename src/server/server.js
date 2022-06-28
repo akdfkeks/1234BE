@@ -4,7 +4,7 @@ import cors from "cors";
 import express from "express";
 import passport from "passport";
 import cookieParser from "cookie-parser";
-import passportConfig from "../function/passport/index.js";
+import passportConfig from "../function/authService/passport/index.js";
 
 import { jwtAuth } from "../function/authService/jwtAuth.js";
 import { userRouter } from "../user/userRouter.js";

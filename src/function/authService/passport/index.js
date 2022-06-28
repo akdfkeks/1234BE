@@ -1,8 +1,8 @@
-import prisma from "../../orm/prisma.js";
+import prisma from "../../../orm/prisma.js";
 import passport from "passport";
 import passportJWT from "passport-jwt";
 import passportLocal from "passport-local";
-import { makePwHashed } from "../password.js";
+import { makePwHashed } from "../../password.js";
 
 const ExtractJWT = passportJWT.ExtractJwt;
 const LocalStrategy = passportLocal.Strategy;
