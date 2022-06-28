@@ -1,6 +1,5 @@
 "use strict";
 
-import { userInfoCheck } from "../function/etc/formatChecker.js";
 import jwt from "jsonwebtoken";
 import passport from "passport";
 import dotenv from "dotenv";
@@ -40,7 +39,7 @@ export async function login(req, res, next) {
 	if (!req.body.userId || !req.body.userPw) return res.json({ success: false, message: "Invalid data format" });
 	passport.authenticate("local", { session: false }, (err, user, info) => {
 		if (err || !user) {
-			return res.status(400).json({ success: false, message: info });
+			return res.status(400).json({ success: false, message: "No such user" });
 		}
 		req.login(user, { session: false }, (error) => {
 			if (error) {
