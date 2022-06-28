@@ -6,7 +6,7 @@ import passport from "passport";
 import cookieParser from "cookie-parser";
 import passportConfig from "../function/passport/index.js";
 
-import { jwtAuth } from "../function/middleware.js";
+import { jwtAuth } from "../function/authService/jwtAuth.js";
 import { userRouter } from "../user/userRouter.js";
 import { authRouter } from "../auth/authRouter.js";
 import { todoRouter } from "../todo/todoRouter.js";

@@ -1,12 +1,18 @@
 "use strict";
 
-import { userInfoCheck } from "../function/etc/formatChecker.js";
 import jwt from "jsonwebtoken";
 import passport from "passport";
 import dotenv from "dotenv";
+import Joi from "joi";
 import { SignUp } from "../function/authService/authService.js";
+import { logger } from "../function/logger/logger.js";
 
 dotenv.config();
+const signupSchema = Joi.object().keys({
+	name: Joi.string().min(1).max(50),
+	userId: Joi.string().min(1).max(20).required(),
+	userPw: Joi.string().min(1).max(20).required(),
+});
 
 export async function signUp(req, res, next) {
 	const reqUser = {
@@ -15,24 +21,25 @@ export async function signUp(req, res, next) {
 		userPw: req.body.userPw,
 	};
 
-	let error = userInfoCheck(reqUser);
+	const { error } = signupSchema.validate(reqUser, { abortEarly: true });
 	if (!error) {
 		try {
 			const user = await SignUp(reqUser);
 			res.status(200).json({ success: true, message: "SignUp Succeed" });
 		} catch (err) {
-			// TODO : Logger
+			logger.error(err);
 			res.status(500).json({ success: false, message: err.message });
 		}
 	} else {
-		res.status(422).json({ success: false, message: "Invalid Data Format" });
+		res.status(400).json({ success: false, message: "Invalid data format" });
 	}
 }
 
 export async function login(req, res, next) {
+	if (!req.body.userId || !req.body.userPw) return res.json({ success: false, message: "Invalid data format" });
 	passport.authenticate("local", { session: false }, (err, user, info) => {
 		if (err || !user) {
-			return res.status(400).json({ success: false, message: "No such User" });
+			return res.status(400).json({ success: false, message: "No such user" });
 		}
 		req.login(user, { session: false }, (error) => {
 			if (error) {
