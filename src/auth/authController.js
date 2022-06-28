@@ -25,7 +25,7 @@ export async function signUp(req, res, next) {
 	if (!error) {
 		try {
 			const user = await SignUp(reqUser);
-			res.status(200).json({ success: true, message: "SignUp Succeed" });
+			res.status(201).json({ success: true, message: "SignUp Succeed" });
 		} catch (err) {
 			logger.error(err);
 			res.status(500).json({ success: false, message: err.message });
@@ -36,14 +36,14 @@ export async function signUp(req, res, next) {
 }
 
 export async function login(req, res, next) {
-	if (!req.body.userId || !req.body.userPw) return res.json({ success: false, message: "Invalid data format" });
+	if (!req.body.userId || !req.body.userPw) return res.status(400).json({ success: false, message: "Invalid data format" });
 	passport.authenticate("local", { session: false }, (err, user, info) => {
 		if (err || !user) {
-			return res.status(400).json({ success: false, message: "No such user" });
+			return res.status(401).json({ success: false, message: "No such user" });
 		}
 		req.login(user, { session: false }, (error) => {
 			if (error) {
-				return res.status(400).json({
+				return res.status(401).json({
 					success: false,
 					message: "Login Failed",
 					user: user,

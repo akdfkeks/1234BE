@@ -14,7 +14,7 @@ export async function getToodoo(req, res, next) {
 		res.status(200).json({ success: true, message: "Success!", data: data });
 	} catch (err) {
 		logger.error(err);
-		res.status(400).json({ success: false, message: err.message });
+		res.status(500).json({ success: false, message: err.message });
 	}
 }
 
@@ -22,12 +22,14 @@ export async function createToodoo(req, res, next) {
 	const { userId } = req.body.user;
 	const { title, targetDate } = req.body;
 
+	// need validation
+
 	try {
 		const data = await createTodo(userId, title, targetDate);
 		res.status(200).json({ success: true, message: "Success!", data: data });
 	} catch (err) {
 		logger.error(err);
-		res.status(400).json({ success: false, message: err.message });
+		res.status(500).json({ success: false, message: err.message });
 	}
 }
 
