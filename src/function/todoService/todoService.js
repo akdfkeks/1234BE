@@ -4,7 +4,6 @@ import { logger } from "../logger/logger.js";
 
 export async function getTodo(userId, targetYearMonth) {
 	if (!userId || !targetYearMonth) throw new Error("todoService : Invalid arguments");
-	if (typeof targetYearMonth !== "number") targetYearMonth = parseInt(targetYearMonth);
 
 	try {
 		const recentTodoLists = await prisma.scheduleCart.upsert({
