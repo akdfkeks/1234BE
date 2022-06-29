@@ -1,6 +1,7 @@
 "use strict";
 
 import cors from "cors";
+import morgan from "morgan";
 import express from "express";
 import passport from "passport";
 import cookieParser from "cookie-parser";
@@ -17,6 +18,7 @@ export async function createServer() {
 
 	// set basic Middleware
 	app.use(cors());
+	app.use(morgan("dev"));
 	app.use(express.json());
 	app.use(express.urlencoded({ extended: false }));
 	app.use(cookieParser());
