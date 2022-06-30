@@ -21,16 +21,6 @@ export async function SignUp(reqUser) {
 	});
 
 	if (userData) {
-		const currentYearMonth = parseInt(getYearMonth());
-		const scheduleCart = await prisma.scheduleCart.create({
-			data: {
-				yearMonth: currentYearMonth,
-				ownerId: userData.userId,
-			},
-		});
-		if (!scheduleCart) {
-			throw new Error("Fail to create ScheduleCart");
-		}
 		return userData;
 	} else throw new Error("Fail to create User");
 }
