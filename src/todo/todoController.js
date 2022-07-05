@@ -1,7 +1,7 @@
 "use strict";
 
 import { getTodo, createTodo } from "../function/todoService/todoService.js";
-import { getYearMonth } from "../function/etc/getYearMonth.js";
+import { getYearMonth } from "../function/etc/date.js";
 import { logger } from "../function/logger/logger.js";
 import Joi from "joi";
 

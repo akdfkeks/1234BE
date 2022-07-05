@@ -2,8 +2,8 @@
 
 import prisma from "../../orm/prisma.js";
 
-import { createHashedPw } from "../password.js";
-import { getYearMonth } from "../etc/getYearMonth.js";
+import { createHashedPw } from "../etc/password.js";
+import { getYearMonth } from "../etc/date.js";
 
 export async function SignUp(reqUser) {
 	// Check if user already exists

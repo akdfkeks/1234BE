@@ -3,7 +3,7 @@ import passport from "passport";
 import Joi from "joi";
 import passportJWT from "passport-jwt";
 import passportLocal from "passport-local";
-import { makePwHashed } from "../../password.js";
+import { makePwHashed } from "../../etc/password.js";
 
 const ExtractJWT = passportJWT.ExtractJwt;
 const LocalStrategy = passportLocal.Strategy;
