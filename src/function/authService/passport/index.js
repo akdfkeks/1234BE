@@ -39,11 +39,13 @@ async function LocalVerify(userId, userPw, done) {
 	}
 }
 const cookieExtractor = (req) => {
+	console.log(req.cookies.token);
 	return req.cookies.token;
 };
 const JWTConfig = {
 	//jwtFromRequest: ExtractJWT.fromAuthHeaderAsBearerToken(),
-	jwtFromRequest: cookieExtractor,
+	//jwtFromRequest: cookieExtractor,
+	jwtFromRequest: ExtractJWT.fromAuthHeaderAsBearerToken(),
 	secretOrKey: process.env.JWT_SECRET,
 };
 async function JWTVerify(jwtPayload, done) {

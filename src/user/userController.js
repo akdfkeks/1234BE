@@ -53,8 +53,16 @@ export async function createUserBoard(req, res, next) {
 		logger.error(err);
 	}
 }
-export function getUserInfo(req, res, next) {
+export async function getUserInfo(req, res, next) {
 	const { userId } = req.body;
+	try {
+		const userInfo = await prisma.user.findUnique({
+			where: { userId: userId },
+		});
+		res.status(200).json({ success: true, message: "User Info", data: userInfo });
+	} catch (err) {
+		console.error(err);
+	}
 }
 export function setUserInfo(req, res, next) {
 	const { userId } = req.body;

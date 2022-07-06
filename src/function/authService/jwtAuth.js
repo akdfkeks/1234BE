@@ -1,7 +1,8 @@
 import passport from "passport";
 
 export function jwtAuth(req, res, next) {
-	if (!req.cookies.token) {
+	//console.log(req.cookies["token"]);
+	if (!req.cookies["token"]) {
 		return res.status(401).json({ success: false, message: "No permission!" });
 	}
 

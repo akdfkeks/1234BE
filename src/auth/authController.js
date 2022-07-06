@@ -54,12 +54,12 @@ export async function login(req, res, next) {
 				userId: user.userId,
 			};
 			const token = jwt.sign(resUser, process.env.JWT_SECRET, {
-				expiresIn: "2h",
+				expiresIn: "1h",
 				issuer: "TOODOO",
 			});
 			return (
-				res.cookie("token", token, { httpOnly: true, maxAge: 1000 * 60 * 120 }),
-				res.status(200).json({ success: true, message: "Login Succeed" })
+				//res.cookie("token", token, { httpOnly: true, maxAge: 1000 * 60 * 120 }),
+				res.status(200).json({ success: true, message: "Login Succeed", accessToken: token })
 			);
 		});
 	})(req, res);
