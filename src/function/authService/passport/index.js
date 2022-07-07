@@ -38,10 +38,10 @@ async function LocalVerify(userId, userPw, done) {
 		return done("Error");
 	}
 }
-const cookieExtractor = (req) => {
-	console.log(req.cookies.token);
-	return req.cookies.token;
-};
+// const cookieExtractor = (req) => {
+// 	console.log(req.cookies.token);
+// 	return req.cookies.token;
+// };
 const JWTConfig = {
 	//jwtFromRequest: ExtractJWT.fromAuthHeaderAsBearerToken(),
 	//jwtFromRequest: cookieExtractor,

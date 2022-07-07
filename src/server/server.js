@@ -16,7 +16,6 @@ export async function createServer() {
 	const app = express();
 
 	// set basic Middleware
-	//app.use(cors({ origin: ["http://172.30.17.100:3001", "http://172.18.112.1:3000"], credentials: true }));
 	app.use(cors());
 	app.use(morgan("dev"));
 	app.use(express.json());
