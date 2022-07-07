@@ -2,8 +2,8 @@
 
 import prisma from "../../orm/prisma.js";
 
-import { createHashedPw } from "../password.js";
-import { getYearMonth } from "../etc/getYearMonth.js";
+import { createHashedPw } from "../etc/password.js";
+import { getYearMonth } from "../etc/date.js";
 
 export async function SignUp(reqUser) {
 	// Check if user already exists
@@ -21,16 +21,6 @@ export async function SignUp(reqUser) {
 	});
 
 	if (userData) {
-		const currentYearMonth = parseInt(getYearMonth());
-		const scheduleCart = await prisma.scheduleCart.create({
-			data: {
-				yearMonth: currentYearMonth,
-				ownerId: userData.userId,
-			},
-		});
-		if (!scheduleCart) {
-			throw new Error("Fail to create ScheduleCart");
-		}
 		return userData;
 	} else throw new Error("Fail to create User");
 }
