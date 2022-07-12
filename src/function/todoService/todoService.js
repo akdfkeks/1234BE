@@ -74,3 +74,16 @@ export async function createTodo(userId, title, targetDate) {
 		throw new Error("todoService : Fail to create a new schedule");
 	}
 }
+
+export async function deleteTodo(uuid) {
+	try {
+		const data = await prisma.schedule.delete({
+			where: {
+				uuid: uuid,
+			},
+		});
+		return data;
+	} catch (error) {
+		throw new Error("No such schedule");
+	}
+}

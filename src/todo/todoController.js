@@ -1,6 +1,6 @@
 "use strict";
 
-import { getTodo, createTodo } from "../function/todoService/todoService.js";
+import { getTodo, createTodo, deleteTodo } from "../function/todoService/todoService.js";
 import { getYearMonth } from "../function/etc/date.js";
 import { logger } from "../function/logger/logger.js";
 import Joi from "joi";
@@ -15,6 +15,10 @@ const createTodoSchema = Joi.object().keys({
 	userId: Joi.string().min(1).max(20).required().alphanum(),
 	title: Joi.string().min(1).max(100),
 	targetDate: Joi.string().pattern(new RegExp(/^\d{4}(0[1-9]|1[012])-(0[1-9]|1[0-9]|2[0-4])(0[1-9]|[1-5][0-9])$/)),
+});
+const deleteTodoSchema = Joi.object().keys({
+	//02ffd70e-d524-4ec3-ba5f-95cc1d1b2bc5
+	uuid: Joi.string().uuid().required(),
 });
 
 export async function getToodoo(req, res, next) {
@@ -58,4 +62,19 @@ export async function createToodoo(req, res, next) {
 
 export function modifyToodoo(req, res, next) {
 	//
+}
+
+export async function deleteToodoo(req, res, next) {
+	const scheduleUuid = req.body.uuid;
+	const { error } = deleteTodoSchema.validate({ uuid: scheduleUuid });
+
+	if (!error) {
+		try {
+			const data = await deleteTodo(scheduleUuid);
+			res.status(200).json({ success: true, message: "Success!", data: data });
+		} catch (err) {
+			console.log(err);
+			return res.status(400).json({ success: false, message: "Invalid data format" });
+		}
+	}
 }
