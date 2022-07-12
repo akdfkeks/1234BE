@@ -4,6 +4,7 @@ import { getTodo, createTodo, deleteTodo } from "../function/todoService/todoSer
 import { getYearMonth } from "../function/etc/date.js";
 import { logger } from "../function/logger/logger.js";
 import Joi from "joi";
+import _, { sortBy } from "underscore";
 
 const getTodoSchema = Joi.object().keys({
 	userId: Joi.string().min(1).max(20).required().alphanum(),
@@ -14,7 +15,9 @@ const getTodoSchema = Joi.object().keys({
 const createTodoSchema = Joi.object().keys({
 	userId: Joi.string().min(1).max(20).required().alphanum(),
 	title: Joi.string().min(1).max(100),
-	targetDate: Joi.string().pattern(new RegExp(/^\d{4}(0[1-9]|1[012])-(0[1-9]|1[0-9]|2[0-4])(0[1-9]|[1-5][0-9])$/)),
+	targetDate: Joi.string().pattern(
+		new RegExp(/^\d{4}(0[1-9]|1[012])(0[1-9]|[12][0-9]|3[01])-(0[1-9]|1[0-9]|2[0-4])(0[1-9]|[1-5][0-9])$/)
+	),
 });
 const deleteTodoSchema = Joi.object().keys({
 	//02ffd70e-d524-4ec3-ba5f-95cc1d1b2bc5
@@ -30,7 +33,14 @@ export async function getToodoo(req, res, next) {
 
 	if (!error) {
 		try {
-			const data = await getTodo(userId, targetYearMonth);
+			const schedules = await getTodo(userId, targetYearMonth);
+			let data = _.chain(schedules)
+				.sortBy("targetDate")
+				.groupBy(function (schedule) {
+					return schedule.targetDate.getDate();
+				})
+				.value();
+			data = Object.values(data);
 			return res.status(200).json({ success: true, message: "Success!", data: data });
 		} catch (err) {
 			logger.error(err);
@@ -49,7 +59,15 @@ export async function createToodoo(req, res, next) {
 
 	if (!error) {
 		try {
-			const data = await createTodo(userId, title, targetDate);
+			const schedules = await createTodo(userId, title, targetDate);
+			let data = _.chain(schedules)
+				.groupBy(function (schedule) {
+					return schedule.targetDate.getDate();
+				})
+				.value();
+			data = data.array.forEach((element) => {
+				sortBy(element.targetDate);
+			});
 			res.status(200).json({ success: true, message: "Success!", data: data });
 		} catch (err) {
 			logger.error(err);

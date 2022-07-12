@@ -29,7 +29,7 @@ export async function getTodo(userId, targetYearMonth) {
 				yearMonth: targetYearMonth,
 			},
 		});
-		return recentTodoLists;
+		return recentTodoLists.schedules;
 	} catch (error) {
 		logger.error(err);
 		throw new Error("todoService : Fail to get TODO cart");
@@ -68,7 +68,7 @@ export async function createTodo(userId, title, targetDate) {
 				schedules: { create: { title, targetDate: targetISODate } },
 			},
 		});
-		return newTodoList;
+		return newTodoList.schedules;
 	} catch (error) {
 		logger.error(err);
 		throw new Error("todoService : Fail to create a new schedule");
