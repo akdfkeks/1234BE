@@ -54,7 +54,6 @@ export async function getToodoo(req, res, next) {
 export async function createToodoo(req, res, next) {
 	const { userId } = req.body.user;
 	const { title, targetDate } = req.body;
-
 	const { error } = createTodoSchema.validate({ userId, title, targetDate }, { abortEarly: true });
 
 	if (!error) {
