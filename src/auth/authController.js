@@ -21,6 +21,7 @@ export async function signUp(req, res, next) {
 		userId: req.body.userId,
 		userPw: req.body.userPw,
 	};
+	//console.log(reqUser);
 
 	const { error } = signupSchema.validate(reqUser, { abortEarly: true });
 	if (!error) {
