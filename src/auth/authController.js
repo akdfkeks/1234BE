@@ -60,7 +60,7 @@ export async function login(req, res, next) {
 			});
 			return (
 				//res.cookie("token", token, { httpOnly: true, maxAge: 1000 * 60 * 120 }),
-				res.status(200).json({ success: true, message: "Login Succeed", accessToken: token })
+				res.status(200).json({ success: true, message: "Login Succeed", user: resUser, accessToken: token })
 			);
 		});
 	})(req, res);
