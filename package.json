@@ -5,6 +5,7 @@
 	"main": "index.js",
 	"scripts": {
 		"dev": "nodemon index.js --exec babel-node",
+		"start": "pm2 babel-node index.js",
 		"testmodule": "node ./src/test/sampleData.js --exec babel-node",
 		"test": "echo \"Error: no test specified\" && exit 1",
 		"prisma:push": "npx prisma push",
